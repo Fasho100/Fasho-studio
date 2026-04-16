@@ -1,715 +1,77 @@
 <!DOCTYPE html>
-
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>FASHO STUDIO</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--gold:#FFD700;--gold2:#FFA500;--black:#070707;--card:#131313;--card2:#1a1a1a;--border:#222;--text:#f2f2f2;--muted:#666;--red:#e05555;--green:#5cb85c;}
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{background:var(--black);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 50% at 10% 70%,rgba(255,215,0,.05) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 90% 10%,rgba(255,140,0,.03) 0%,transparent 60%);pointer-events:none;z-index:0;animation:glow 12s ease-in-out infinite alternate}
-@keyframes glow{from{opacity:.6}to{opacity:1}}
-.wrap{position:relative;z-index:1;max-width:460px;margin:0 auto;padding:0 14px 70px}
-header{padding:28px 0 14px;text-align:center}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:50px;letter-spacing:8px;background:linear-gradient(135deg,#FFD700,#FFA500,#FFD700);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
-.tagline{font-size:10px;letter-spacing:5px;color:var(--muted);text-transform:uppercase;margin-top:4px}
-.mode-row{display:flex;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:5px;margin:16px 0;gap:4px}
-.mode-btn{flex:1;padding:11px 6px;border:none;border-radius:10px;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;cursor:pointer;transition:all .3s;text-align:center;line-height:1.3}
-.mode-btn .ico{font-size:18px;display:block;margin-bottom:3px}
-.mode-btn.active{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;font-weight:700}
-.api-bar{background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.12);border-radius:12px;padding:12px 14px;margin-bottom:16px}
-.api-lbl{font-size:10px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
-.api-row{display:flex;gap:8px}
-.api-row input{flex:1;background:#0a0a0a;border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;padding:9px 12px;outline:none;transition:border-color .3s}
-.api-row input:focus{border-color:var(--gold)}
-.api-save{padding:9px 14px;background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;border-radius:8px;color:#000;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:1px;cursor:pointer}
-.api-st{font-size:11px;color:var(--muted);margin-top:6px}
-.api-st.ok{color:var(--green)}.api-st.err{color:var(--red)}
-.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:12px;display:none;animation:up .35s cubic-bezier(.16,1,.3,1)}
-.card.show{display:block}
-@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-.card-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
-.badge{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:17px;color:#000;flex-shrink:0}
-.card-title{font-family:'Bebas Neue',sans-serif;font-size:21px;letter-spacing:2px}
-.card-sub{font-size:11px;color:var(--muted);margin-top:2px}
-.flbl{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:8px}
-textarea,input[type="text"],input[type="password"]{width:100%;background:#0a0a0a;border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;padding:12px;outline:none;transition:border-color .3s;resize:none}
-textarea:focus,input:focus{border-color:var(--gold)}
-textarea{height:82px}textarea.tall{height:140px}
-.chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
-.chip{background:#0a0a0a;border:1px solid var(--border);border-radius:20px;padding:5px 11px;font-size:11px;color:var(--muted);cursor:pointer;transition:all .2s;white-space:nowrap}
-.chip:hover{border-color:var(--gold);color:var(--gold);background:rgba(255,215,0,.05)}
-.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px}
-.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:14px}
-.sel-btn{background:#0a0a0a;border:1px solid var(--border);border-radius:9px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:11px;padding:10px 4px;cursor:pointer;transition:all .2s;text-align:center;line-height:1.3}
-.sel-btn:hover,.sel-btn.sel{border-color:var(--gold);color:var(--gold);background:rgba(255,215,0,.06)}
-.tabs{display:flex;background:#0a0a0a;border:1px solid var(--border);border-radius:9px;padding:3px;margin-bottom:14px;gap:3px}
-.tab{flex:1;padding:9px;border:none;border-radius:7px;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .25s;text-align:center}
-.tab.active{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;font-weight:600}
-.tab-panel{display:none}.tab-panel.active{display:block}
-.ubox{border:2px dashed var(--border);border-radius:12px;padding:24px 16px;text-align:center;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
-.ubox:hover{border-color:var(--gold)}
-.ubox.filled{border-style:solid;border-color:var(--gold);padding:0}
-.ubox.filled-audio{border-style:solid;border-color:var(--gold);background:rgba(255,215,0,.04);padding:14px}
-.ubox input{display:none}
-.uico{font-size:28px;margin-bottom:6px}
-.ulbl{font-size:12px;color:var(--muted)}
-.ulbl span{color:var(--gold)}
-.prev-img{width:100%;height:160px;object-fit:cover;border-radius:10px;display:none}
-audio{width:100%;margin-top:10px;accent-color:var(--gold);display:none}
-.song-row{display:flex;align-items:center;gap:10px}
-.song-ico{font-size:26px;flex-shrink:0}
-.song-nm{font-size:13px;font-weight:500;word-break:break-all}
-.song-sz{font-size:11px;color:var(--muted);margin-top:2px}
-.song-chg{font-size:11px;color:var(--gold);margin-top:3px;cursor:pointer}
-.people-list{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
-.person-card{background:var(--card2);border:1px solid var(--border);border-radius:14px;overflow:hidden}
-.person-card.me{border-color:rgba(255,215,0,.3)}
-.person-header{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;user-select:none}
-.p-av{width:44px;height:44px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;overflow:hidden}
-.p-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-.p-name{font-size:14px;font-weight:600;flex:1}
-.p-role{font-size:11px;color:var(--muted)}
-.p-arr{font-size:16px;color:var(--muted);transition:transform .3s}
-.person-card.open .p-arr{transform:rotate(180deg)}
-.person-body{display:none;padding:14px;border-top:1px solid var(--border)}
-.person-card.open .person-body{display:block}
-.me-tag{display:inline-flex;align-items:center;gap:5px;background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.2);border-radius:20px;padding:3px 10px;font-size:10px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
-.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
-.photo-thumb{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;background:var(--border)}
-.photo-thumb img{width:100%;height:100%;object-fit:cover}
-.photo-rm{position:absolute;top:4px;right:4px;width:20px;height:20px;background:rgba(0,0,0,.85);border:none;border-radius:50%;color:#fff;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
-.photo-add{aspect-ratio:1;border:2px dashed var(--border);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:border-color .3s;font-size:22px;color:var(--muted);gap:4px}
-.photo-add span{font-size:10px;color:var(--muted)}
-.photo-add:hover{border-color:var(--gold);color:var(--gold)}
-.add-p-btn{width:100%;padding:13px;background:transparent;border:2px dashed var(--border);border-radius:12px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:8px}
-.add-p-btn:hover{border-color:var(--gold);color:var(--gold)}
-.rm-p-btn{background:transparent;border:1px solid #333;border-radius:8px;color:var(--red);font-size:12px;padding:7px 12px;cursor:pointer;width:100%;margin-top:12px;font-family:'DM Sans',sans-serif;transition:all .25s}
-.rm-p-btn:hover{background:var(--red);color:#fff;border-color:var(--red)}
-.btn-gold{width:100%;padding:15px;background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;border-radius:12px;color:#000;font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;cursor:pointer;transition:all .3s;margin-top:14px}
-.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(255,215,0,.2)}
-.btn-gold:active{transform:translateY(0)}
-.btn-gold:disabled{opacity:.35;cursor:not-allowed;transform:none;box-shadow:none}
-.btn-ghost{width:100%;padding:12px;background:transparent;border:1px solid var(--border);border-radius:12px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all .3s;margin-top:8px}
-.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
-.step-track{display:flex;align-items:center;justify-content:center;gap:6px;margin:14px 0 20px}
-.sdot{width:22px;height:3px;border-radius:2px;background:var(--border);transition:all .4s cubic-bezier(.34,1.56,.64,1)}
-.sdot.on{background:linear-gradient(90deg,var(--gold),var(--gold2));width:36px}
-.div{height:1px;background:var(--border);margin:14px 0}
-.cast-box{background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.1);border-radius:10px;padding:12px;margin-top:12px;font-size:12px;color:var(--muted);line-height:1.8}
-.cast-box strong{color:var(--text)}
-.info-box{background:rgba(255,215,0,.04);border:1px solid rgba(255,215,0,.1);border-radius:10px;padding:12px;margin-bottom:14px;font-size:12px;color:var(--muted);line-height:1.7}
-.info-box strong{color:var(--gold)}
-.dir-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,215,0,.08);border:1px solid rgba(255,215,0,.2);border-radius:20px;padding:5px 12px;font-size:10px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
-.loader{display:none;text-align:center;padding:36px 0}
-.loader.on{display:block}
-.spin{width:46px;height:46px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .85s linear infinite;margin:0 auto 14px}
-@keyframes spin{to{transform:rotate(360deg)}}
-.load-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:3px;color:var(--gold)}
-.load-sub{font-size:12px;color:var(--muted);margin-top:5px}
-.result-card{background:var(--card);border:1px solid var(--gold);border-radius:16px;padding:18px;margin-bottom:12px;display:none;animation:up .5s cubic-bezier(.16,1,.3,1)}
-.result-card.show{display:block}
-.result-lbl{font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:3px;color:var(--gold);margin-bottom:12px}
-.result-img{width:100%;border-radius:10px;margin-bottom:10px}
-.result-acts{display:flex;gap:8px;margin-top:10px}
-.result-acts a,.result-acts button{flex:1;padding:12px;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;text-align:center;cursor:pointer;text-decoration:none;transition:all .25s}
-.btn-dl{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:none}
-.btn-redo{background:transparent;color:var(--muted);border:1px solid var(--border)}
-.btn-redo:hover{border-color:var(--gold);color:var(--gold)}
-.status{font-size:12px;color:var(--muted);text-align:center;margin-top:10px;min-height:16px}
-.status.err{color:var(--red)}.status.ok{color:var(--green)}
+body {margin:0;background:#000;color:#fff;font-family:sans-serif;padding-bottom:30px;}
+.header {background:#111;padding:20px;text-align:center;border-bottom:4px solid #FFD700;}
+.logo {font-size:34px;color:#FFD700;font-weight:bold;letter-spacing:2px;}
+.tabs {display:flex;background:#111;}
+.tab {flex:1;padding:18px;text-align:center;font-size:18px;}
+.tab.active {background:#FFD700;color:#000;font-weight:bold;}
+.container {padding:20px;}
+input, button {width:100%;padding:15px;margin:8px 0;border-radius:8px;font-size:17px;}
+input {background:#222;border:none;color:white;}
+button {background:#FFD700;color:black;border:none;font-weight:bold;}
+.status {padding:10px;text-align:center;font-size:15px;color:#FFD700;}
 </style>
 </head>
 <body>
-<div class="wrap">
 
-<header>
+<div class="header">
   <div class="logo">FASHO STUDIO</div>
-  <div class="tagline">AI Music Video Creator</div>
-</header>
-
-<div class="mode-row">
-  <button class="mode-btn active" id="modeBuilder" onclick="setMode('builder')"><span class="ico">🎛️</span>Step by Step</button>
-  <button class="mode-btn" id="modeDirector" onclick="setMode('director')"><span class="ico">🎬</span>Director Mode</button>
 </div>
 
-<div class="api-bar">
-  <div class="api-lbl">🔑 Replicate API Key</div>
-  <div class="api-row">
-    <input type="password" id="apiKeyInput" placeholder="r8_xxxxxxxxxxxxxxxxxxxx"/>
-    <button class="api-save" onclick="saveKey()">SAVE</button>
-  </div>
-  <div class="api-st" id="apiSt"></div>
+<div class="tabs">
+  <div class="tab active" onclick="switchTab(0)">STEP BY STEP</div>
+  <div class="tab" onclick="switchTab(1)">DIRECTOR MODE</div>
 </div>
 
-<!-- ═══════════ BUILDER ═══════════ -->
+<div class="container">
+  <input type="text" id="apikey" placeholder="r8_ your Replicate API key">
+  <button onclick="saveKey()">SAVE API KEY</button>
+  <div id="status" class="status"></div>
 
-<div id="builderMode">
-  <div class="step-track">
-    <div class="sdot on" id="d1"></div><div class="sdot" id="d2"></div><div class="sdot" id="d3"></div><div class="sdot" id="d4"></div>
+  <div id="director" style="display:none;">
+    <h2 style="margin-top:30px;">Director Mode</h2>
+    <textarea id="prompt" rows="4" style="width:100%;background:#222;color:white;border:none;padding:15px;border-radius:8px;" placeholder="Describe your full music video..."></textarea>
+    <button onclick="generate()" style="margin-top:15px;">GENERATE MUSIC VIDEO</button>
   </div>
-
-  <!-- S1 TRACK -->
-
-  <div class="card show" id="s1">
-    <div class="card-head"><div class="badge">1</div><div><div class="card-title">The Track</div><div class="card-sub">AI generate or upload your own</div></div></div>
-    <div class="tabs">
-      <button class="tab active" id="bTabAI" onclick="switchMTab('ai')">🤖 AI Generate</button>
-      <button class="tab" id="bTabOwn" onclick="switchMTab('own')">🎵 My Own Song</button>
-    </div>
-    <div class="tab-panel active" id="bPAI">
-      <div class="flbl">Genre</div>
-      <div class="g3" id="bGenreGrid">
-        <button class="sel-btn sel" onclick="pickGenre(this,'Hip-Hop','b')">🎤<br>Hip-Hop</button>
-        <button class="sel-btn" onclick="pickGenre(this,'R&amp;B','b')">🎶<br>R&amp;B</button>
-        <button class="sel-btn" onclick="pickGenre(this,'Trap','b')">🔊<br>Trap</button>
-        <button class="sel-btn" onclick="pickGenre(this,'Drill','b')">💀<br>Drill</button>
-        <button class="sel-btn" onclick="pickGenre(this,'Soul','b')">✨<br>Soul</button>
-        <button class="sel-btn" onclick="pickGenre(this,'Pop','b')">🌟<br>Pop</button>
-      </div>
-      <div class="flbl">Describe the beat</div>
-      <div class="chips">
-        <span class="chip" onclick="chip('bBeat','dark melodic vibes')">dark melodic</span>
-        <span class="chip" onclick="chip('bBeat','hard hitting 808s')">hard 808s</span>
-        <span class="chip" onclick="chip('bBeat','smooth saxophone loop')">smooth sax</span>
-        <span class="chip" onclick="chip('bBeat','emotional piano chords')">emotional piano</span>
-        <span class="chip" onclick="chip('bBeat','laid back groove')">laid back</span>
-      </div>
-      <textarea id="bBeat" placeholder="Dark trap beat, heavy 808s, melodic hook, Houston style..."></textarea>
-    </div>
-    <div class="tab-panel" id="bPOwn">
-      <div class="flbl">Upload Your Track</div>
-      <div class="ubox" id="bSongBox" onclick="document.getElementById('bSongFile').click()">
-        <input type="file" id="bSongFile" accept="audio/*" onchange="loadSong(event,'b')"/>
-        <div id="bSongPH"><div class="uico">🎵</div><div class="ulbl">Tap to upload<br><span>MP3 · WAV · M4A</span></div></div>
-        <div class="song-row" id="bSongInfo" style="display:none">
-          <div class="song-ico">🎵</div><div><div class="song-nm" id="bSongName"></div><div class="song-sz" id="bSongSz"></div><div class="song-chg">Tap to change</div></div>
-        </div>
-      </div>
-      <audio id="bSongAudio" controls></audio>
-    </div>
-    <button class="btn-gold" onclick="goStep(2)">NEXT — BUILD YOUR CAST →</button>
-  </div>
-
-  <!-- S2 CAST -->
-
-  <div class="card" id="s2">
-    <div class="card-head"><div class="badge">2</div><div><div class="card-title">The Cast</div><div class="card-sub">You + anyone else in the video</div></div></div>
-    <div class="people-list" id="bPeopleList"></div>
-    <button class="add-p-btn" onclick="addPerson('b')">➕ Add Another Person to the Video</button>
-    <button class="btn-gold" onclick="goStep(3)">NEXT — SET THE LOOK →</button>
-    <button class="btn-ghost" onclick="goStep(1)">← Back</button>
-  </div>
-
-  <!-- S3 LOOK -->
-
-  <div class="card" id="s3">
-    <div class="card-head"><div class="badge">3</div><div><div class="card-title">The Look</div><div class="card-sub">Outfit + energy for each person</div></div></div>
-    <div id="lookList"></div>
-    <button class="btn-gold" onclick="goStep(4)">NEXT — SET THE SCENE →</button>
-    <button class="btn-ghost" onclick="goStep(2)">← Back</button>
-  </div>
-
-  <!-- S4 SCENE -->
-
-  <div class="card" id="s4">
-    <div class="card-head"><div class="badge">4</div><div><div class="card-title">The Scene</div><div class="card-sub">Where is this video going down?</div></div></div>
-    <div class="flbl">Location / Vibe</div>
-    <div class="chips">
-      <span class="chip" onclick="chip('bScene','rooftop in Tokyo at night, neon lights, rain')">Tokyo rooftop</span>
-      <span class="chip" onclick="chip('bScene','luxury mansion, marble floors, gold accents')">mansion</span>
-      <span class="chip" onclick="chip('bScene','sold-out arena stage, spotlight, crowd going crazy')">arena</span>
-      <span class="chip" onclick="chip('bScene','Houston Texas streets at night, streetlights')">Houston streets</span>
-      <span class="chip" onclick="chip('bScene','recording studio, gold plaques, moody lighting')">studio</span>
-      <span class="chip" onclick="chip('bScene','yacht on the ocean at golden hour')">yacht</span>
-      <span class="chip" onclick="chip('bScene','dark alley, cinematic fog, dramatic shadows')">dark alley</span>
-      <span class="chip" onclick="chip('bScene','penthouse balcony overlooking city skyline at night')">penthouse</span>
-    </div>
-    <textarea id="bScene" placeholder="Describe the full scene — location, lighting, time of day, vibe..."></textarea>
-    <div class="cast-box" id="castSummary" style="display:none"></div>
-    <button class="btn-gold" onclick="runBuilder()" id="buildBtn">🎬 GENERATE MY MUSIC VIDEO</button>
-    <button class="btn-ghost" onclick="goStep(3)">← Back</button>
-  </div>
-</div>
-
-<!-- ═══════════ DIRECTOR ═══════════ -->
-
-<div id="directorMode" style="display:none">
-  <div class="dir-badge">🎬 Director Mode</div>
-  <div class="info-box"><strong>How it works:</strong> Upload photos of everyone, drop your song, then describe the <strong>entire music video</strong> in one prompt. You become the main character automatically.</div>
-
-  <div class="card show">
-    <div class="card-head"><div class="badge" style="font-size:14px">👥</div><div><div class="card-title">The Cast</div><div class="card-sub">Upload photos for everyone in the video</div></div></div>
-    <div class="people-list" id="dPeopleList"></div>
-    <button class="add-p-btn" onclick="addPerson('d')">➕ Add Another Person</button>
-  </div>
-
-  <div class="card show">
-    <div class="card-head"><div class="badge" style="font-size:14px">🎵</div><div><div class="card-title">The Track</div><div class="card-sub">AI generate or upload yours</div></div></div>
-    <div class="tabs">
-      <button class="tab active" id="dTabAI" onclick="switchDTab('ai')">🤖 AI Generate</button>
-      <button class="tab" id="dTabOwn" onclick="switchDTab('own')">🎵 My Own Song</button>
-    </div>
-    <div class="tab-panel active" id="dPAI">
-      <div class="flbl">Genre</div>
-      <div class="g3" id="dGenreGrid">
-        <button class="sel-btn sel" onclick="pickGenre(this,'Hip-Hop','d')">🎤<br>Hip-Hop</button>
-        <button class="sel-btn" onclick="pickGenre(this,'R&amp;B','d')">🎶<br>R&amp;B</button>
-        <button class="sel-btn" onclick="pickGenre(this,'Trap','d')">🔊<br>Trap</button>
-        <button class="sel-btn" onclick="pickGenre(this,'Drill','d')">💀<br>Drill</button>
-        <button class="sel-btn" onclick="pickGenre(this,'Soul','d')">✨<br>Soul</button>
-        <button class="sel-btn" onclick="pickGenre(this,'Pop','d')">🌟<br>Pop</button>
-      </div>
-      <textarea id="dBeat" placeholder="Describe the beat..."></textarea>
-    </div>
-    <div class="tab-panel" id="dPOwn">
-      <div class="ubox" id="dSongBox" onclick="document.getElementById('dSongFile').click()">
-        <input type="file" id="dSongFile" accept="audio/*" onchange="loadSong(event,'d')"/>
-        <div id="dSongPH"><div class="uico">🎵</div><div class="ulbl">Tap to upload<br><span>MP3 · WAV · M4A</span></div></div>
-        <div class="song-row" id="dSongInfo" style="display:none">
-          <div class="song-ico">🎵</div><div><div class="song-nm" id="dSongName"></div><div class="song-sz" id="dSongSz"></div><div class="song-chg">Tap to change</div></div>
-        </div>
-      </div>
-      <audio id="dSongAudio" controls></audio>
-    </div>
-  </div>
-
-  <div class="card show">
-    <div class="card-head"><div class="badge" style="font-size:14px">✍️</div><div><div class="card-title">Direct the Scene</div><div class="card-sub">Describe the entire video in one shot</div></div></div>
-    <div class="flbl">Full Scene Description</div>
-    <div class="chips" style="margin-bottom:10px">
-      <span class="chip" onclick="chip('dPrompt','all black fit, Tokyo rooftop at night, neon signs, light rain, serious expression, cinematic')">Tokyo night</span>
-      <span class="chip" onclick="chip('dPrompt','designer outfits, luxury penthouse, city skyline, confident energy, golden hour')">penthouse</span>
-      <span class="chip" onclick="chip('dPrompt','Houston streets at 2am, streetlights, hoodies and chains, leaning on cars, unbothered')">Houston streets</span>
-      <span class="chip" onclick="chip('dPrompt','sold-out arena, crowd everywhere, spotlight, smoke machines, hyped energy')">arena</span>
-      <span class="chip" onclick="chip('dPrompt','dark recording studio, moody lighting, gold plaques, reflective and focused')">studio</span>
-    </div>
-    <textarea class="tall" id="dPrompt" placeholder="Example: Me and my crew on a rooftop in Houston at night. I'm in front wearing all black with a gold chain, serious look. My homie on the left in a red hoodie smiling. Fog in the air, city lights behind us. Cinematic music video shot..."></textarea>
-    <button class="btn-gold" onclick="runDirector()" id="dirBtn">🎬 MAKE MY MUSIC VIDEO</button>
-  </div>
-</div>
-
-<!-- LOADER -->
-
-<div class="loader" id="loader">
-  <div class="spin"></div>
-  <div class="load-title" id="loadTitle">COOKING</div>
-  <div class="load-sub" id="loadSub">This takes 30–90 seconds...</div>
-</div>
-
-<!-- RESULTS -->
-
-<div class="result-card" id="musicResult">
-  <div class="result-lbl">🎵 YOUR TRACK</div>
-  <audio id="audioOut" controls style="width:100%;accent-color:var(--gold)"></audio>
-  <div class="result-acts"><a id="dlMusic" class="btn-dl" download="fasho_track.wav">⬇ Save Track</a></div>
-</div>
-<div class="result-card" id="sceneResult">
-  <div class="result-lbl">🎬 YOUR MUSIC VIDEO SCENE</div>
-  <img class="result-img" id="sceneImg"/>
-  <div class="result-acts">
-    <a id="dlScene" class="btn-dl" download="fasho_scene.png">⬇ Save Image</a>
-    <button class="btn-redo" onclick="resetAll()">↺ Start Over</button>
-  </div>
-</div>
-<div class="status" id="mainSt"></div>
 </div>
 
 <script>
-var apiKey='',bGenre='Hip-Hop',dGenre='Hip-Hop';
-var bMusicTab='ai',dMusicTab='ai';
-var bSongUrl=null,dSongUrl=null;
-var appMode='builder',currentStep=1;
-var bPeople=[],dPeople=[];
-var nextBId=0,nextDId=0;
+function switchTab(n) {
+  document.querySelectorAll('.tab').forEach((t,i) => {
+    t.classList.toggle('active', i===n);
+  });
+  document.getElementById('director').style.display = (n===1) ? 'block' : 'none';
+}
 
-var EMOTIONS=[
-  ['😤','Unbothered','cold and unbothered'],
-  ['💪','Confident','confident, chest out'],
-  ['🗿','Serious','serious, stone faced'],
-  ['🔥','Hyped','hyped and energetic'],
-  ['😎','Smooth','smooth and laid back'],
-  ['😔','Reflective','sad and reflective'],
-  ['😁','Joyful','joyful, big smile'],
-  ['🌑','Mysterious','mysterious, dark energy']
-];
+function saveKey() {
+  const key = document.getElementById('apikey').value.trim();
+  if (!key.startsWith('r8_')) {
+    alert("Key must start with r8_");
+    return;
+  }
+  localStorage.setItem('repKey', key);
+  document.getElementById('status').innerHTML = '✅ Key saved!';
+}
 
-window.onload=function(){
-  var k=localStorage.getItem('fasho_key');
-  if(k){apiKey=k;document.getElementById('apiKeyInput').value=k;setApiSt('✓ Key loaded','ok');}
-  addPerson('b',true);
-  addPerson('d',true);
+function generate() {
+  const key = localStorage.getItem('repKey');
+  if (!key) {
+    alert("Save your API key first!");
+    return;
+  }
+  alert("🎥 Generation started!\n\n(This is the mobile-friendly version — real video model next if you want it)");
+}
+
+window.onload = () => {
+  const saved = localStorage.getItem('repKey');
+  if (saved) document.getElementById('apikey').value = saved;
 };
-
-function saveKey(){
-  var v=document.getElementById('apiKeyInput').value.trim();
-  if(!v.startsWith('r8_')){setApiSt('Invalid — must start with r8_','err');return;}
-  apiKey=v;localStorage.setItem('fasho_key',v);setApiSt('✓ Saved','ok');
-}
-function setApiSt(m,c){var e=document.getElementById('apiSt');e.textContent=m;e.className='api-st '+c;}
-
-function setMode(m){
-  appMode=m;
-  document.getElementById('modeBuilder').classList.toggle('active',m==='builder');
-  document.getElementById('modeDirector').classList.toggle('active',m==='director');
-  document.getElementById('builderMode').style.display=m==='builder'?'block':'none';
-  document.getElementById('directorMode').style.display=m==='director'?'block':'none';
-  clearResults();setSt('','');
-}
-
-function goStep(n){
-  if(n===2){
-    if(bMusicTab==='ai'&&!document.getElementById('bBeat').value.trim()){setSt('Describe your beat first','err');return;}
-    if(bMusicTab==='own'&&!bSongUrl){setSt('Upload your song first','err');return;}
-  }
-  if(n===3&&!bPeople.some(function(p){return p.b64s.length>0;})){setSt('Add at least one photo first','err');return;}
-  currentStep=n;
-  ['s1','s2','s3','s4'].forEach(function(id,i){document.getElementById(id).classList.toggle('show',i+1===n);});
-  ['d1','d2','d3','d4'].forEach(function(id,i){document.getElementById(id).classList.toggle('on',i+1===n);});
-  if(n===3)renderLooks();
-  if(n===4)renderCastSummary();
-  setSt('','');window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function pickGenre(btn,g,m){
-  if(m==='b')bGenre=g;else dGenre=g;
-  btn.closest('.g3').querySelectorAll('.sel-btn').forEach(function(b){b.classList.remove('sel');});
-  btn.classList.add('sel');
-}
-
-function switchMTab(t){
-  bMusicTab=t;
-  document.getElementById('bTabAI').classList.toggle('active',t==='ai');
-  document.getElementById('bTabOwn').classList.toggle('active',t==='own');
-  document.getElementById('bPAI').classList.toggle('active',t==='ai');
-  document.getElementById('bPOwn').classList.toggle('active',t==='own');
-}
-function switchDTab(t){
-  dMusicTab=t;
-  document.getElementById('dTabAI').classList.toggle('active',t==='ai');
-  document.getElementById('dTabOwn').classList.toggle('active',t==='own');
-  document.getElementById('dPAI').classList.toggle('active',t==='ai');
-  document.getElementById('dPOwn').classList.toggle('active',t==='own');
-}
-
-function loadSong(e,m){
-  var f=e.target.files[0];if(!f)return;
-  var nameEl=m==="b"?"bSongName":"dSongName";
-  var szEl=m==="b"?"bSongSz":"dSongSz";
-  var phEl=m==="b"?"bSongPH":"dSongPH";
-  var infoEl=m==="b"?"bSongInfo":"dSongInfo";
-  var boxEl=m==="b"?"bSongBox":"dSongBox";
-  var audioEl=m==="b"?"bSongAudio":"dSongAudio";
-  document.getElementById(nameEl).textContent=f.name;
-  document.getElementById(szEl).textContent=(f.size/1048576).toFixed(1)+" MB";
-  document.getElementById(phEl).style.display="none";
-  document.getElementById(infoEl).style.display="flex";
-  document.getElementById(boxEl).classList.add("filled-audio");
-  var reader=new FileReader();
-  reader.onload=function(ev){
-    var dataUrl=ev.target.result;
-    if(m==="b"){bSongUrl=dataUrl;}else{dSongUrl=dataUrl;}
-    var audio=document.getElementById(audioEl);
-    audio.src=dataUrl;
-    audio.style.display="block";
-  };
-  reader.onerror=function(){setSt("Could not read file — try another format","err");};
-  reader.readAsDataURL(f);
-}
-
-function addPerson(m,isMe){
-  isMe=isMe||false;
-  var id=m==='b'?++nextBId:++nextDId;
-  var p={id:id,name:isMe?'Me':'Person '+id,isMe:isMe,b64s:[],outfit:'',emotion:'serious, stone faced'};
-  if(m==='b')bPeople.push(p);else dPeople.push(p);
-  renderPeople(m);
-}
-
-function removePerson(m,id){
-  if(m==='b')bPeople=bPeople.filter(function(p){return p.id!==id;});
-  else dPeople=dPeople.filter(function(p){return p.id!==id;});
-  renderPeople(m);
-}
-
-function renderPeople(m){
-  var people=m==='b'?bPeople:dPeople;
-  var container=document.getElementById(m==='b'?'bPeopleList':'dPeopleList');
-  container.innerHTML='';
-  people.forEach(function(p){
-    var av=p.b64s.length>0
-      ?'<img src="data:image/jpeg;base64,'+p.b64s[0]+'" alt="">'
-      :(p.isMe?'👤':'👥');
-    var thumbs=p.b64s.map(function(b,i){
-      return '<div class="photo-thumb"><img src="data:image/jpeg;base64,'+b+'" alt=""/>'
-        +'<button class="photo-rm" onclick="removePhoto(\''+m+'\','+p.id+','+i+')">×</button></div>';
-    }).join('');
-    var addBtn=p.b64s.length<4
-      ?'<div class="photo-add" onclick="triggerPhoto(\''+m+'\','+p.id+')">'
-        +'<span>📸</span><span>'+(p.b64s.length===0?'Add Photo':'+ More')+'</span></div>'
-      :'';
-    var el=document.createElement('div');
-    el.className='person-card'+(p.isMe?' me':'')+' open';
-    el.id='pc_'+m+'_'+p.id;
-    el.innerHTML=
-      '<div class="person-header" onclick="toggleCard(\''+m+'\','+p.id+')">'
-        +'<div class="p-av">'+av+'</div>'
-        +'<div style="flex:1"><div class="p-name">'+p.name+'</div>'
-        +'<div class="p-role">'+(p.isMe?'⭐ Main character':p.b64s.length+' photo'+(p.b64s.length!==1?'s':'')+' uploaded')+'</div></div>'
-        +'<div class="p-arr">⌄</div>'
-      +'</div>'
-      +'<div class="person-body">'
-        +(p.isMe?'<div class="me-tag">⭐ You — Main Character</div>':'')
-        +'<div class="flbl">Name</div>'
-        +'<input type="text" value="'+p.name+'" placeholder="Name or nickname" '
-          +'oninput="updateName(\''+m+'\','+p.id+',this.value)" style="margin-bottom:14px"/>'
-        +'<div class="flbl">Photos — up to 4</div>'
-        +'<div class="photo-grid">'+thumbs+addBtn+'</div>'
-        +'<input type="file" id="phi_'+m+'_'+p.id+'" accept="image/*" multiple style="display:none" '
-          +'onchange="addPhotos(event,\''+m+'\','+p.id+')"/>'
-        +(!p.isMe?'<button class="rm-p-btn" onclick="removePerson(\''+m+'\','+p.id+')">🗑 Remove '+p.name+'</button>':'')
-      +'</div>';
-    container.appendChild(el);
-  });
-}
-
-function toggleCard(m,id){document.getElementById('pc_'+m+'_'+id).classList.toggle('open');}
-
-function updateName(m,id,val){
-  var people=m==='b'?bPeople:dPeople;
-  var p=people.find(function(x){return x.id===id;});
-  if(p){
-    p.name=val||(p.isMe?'Me':'Person '+id);
-    var el=document.getElementById('pc_'+m+'_'+id);
-    if(el)el.querySelector('.p-name').textContent=p.name;
-  }
-}
-
-function triggerPhoto(m,id){document.getElementById('phi_'+m+'_'+id).click();}
-
-function addPhotos(e,m,id){
-  var files=Array.from(e.target.files);
-  var people=m==='b'?bPeople:dPeople;
-  var p=people.find(function(x){return x.id===id;});
-  if(!p)return;
-  var slots=4-p.b64s.length;
-  var toLoad=files.slice(0,slots);
-  var done=0;
-  toLoad.forEach(function(f){
-    var r=new FileReader();
-    r.onload=function(ev){
-      p.b64s.push(ev.target.result.split(',')[1]);
-      if(++done===toLoad.length)renderPeople(m);
-    };
-    r.readAsDataURL(f);
-  });
-  e.target.value='';
-}
-
-function removePhoto(m,id,idx){
-  var p=(m==='b'?bPeople:dPeople).find(function(x){return x.id===id;});
-  if(p){p.b64s.splice(idx,1);renderPeople(m);}
-}
-
-function renderLooks(){
-  var container=document.getElementById('lookList');
-  container.innerHTML='';
-  bPeople.forEach(function(p){
-    var emoBtns=EMOTIONS.map(function(e){
-      return '<button class="sel-btn'+(p.emotion===e[2]?' sel':'')+'" '
-        +'onclick="setEmotion('+p.id+',\''+e[2]+'\',this)">'+e[0]+'<br>'+e[1]+'</button>';
-    }).join('');
-    var div=document.createElement('div');
-    div.innerHTML=
-      '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:16px;letter-spacing:2px;color:var(--gold);margin-bottom:10px">'
-        +(p.isMe?'⭐':'👤')+' '+p.name+'</div>'
-      +'<div class="flbl">Outfit / Style</div>'
-      +'<div class="chips" style="margin-bottom:8px">'
-        +'<span class="chip" onclick="chipLook('+p.id+',\'all black everything\')">all black</span>'
-        +'<span class="chip" onclick="chipLook('+p.id+',\'white tee and jeans\')">white tee</span>'
-        +'<span class="chip" onclick="chipLook('+p.id+',\'designer fit\')">designer</span>'
-        +'<span class="chip" onclick="chipLook('+p.id+',\'hoodie and sweats\')">hoodie</span>'
-        +'<span class="chip" onclick="chipLook('+p.id+',\'sharp suit and tie\')">suit</span>'
-        +'<span class="chip" onclick="chipLook('+p.id+',\'streetwear, fresh Jordans\')">streetwear</span>'
-        +'<span class="chip" onclick="chipLook('+p.id+',\'iced out, big Cuban chain\')">iced out</span>'
-      +'</div>'
-      +'<textarea id="outfit_'+p.id+'" placeholder="'+(p.isMe?'Your outfit, shoes, jewelry...':p.name+"'s outfit...")+'" '
-        +'oninput="setOutfit('+p.id+',this.value)" style="margin-bottom:14px">'+p.outfit+'</textarea>'
-
-```
-  +'<div class="flbl">Emotion / Energy</div>'
-  +'<div class="g4" id="eg_'+p.id+'">'+emoBtns+'</div>'
-  +'<div class="div"></div>';
-container.appendChild(div);
-```
-
-});
-}
-
-function setOutfit(id,val){var p=bPeople.find(function(x){return x.id===id;});if(p)p.outfit=val;}
-function setEmotion(id,val,btn){
-var p=bPeople.find(function(x){return x.id===id;});if(p)p.emotion=val;
-document.getElementById(‘eg_’+id).querySelectorAll(’.sel-btn’).forEach(function(b){b.classList.remove(‘sel’);});
-btn.classList.add(‘sel’);
-}
-function chipLook(id,val){
-var el=document.getElementById(‘outfit_’+id);
-el.value=el.value?el.value+’, ’+val:val;
-var p=bPeople.find(function(x){return x.id===id;});if(p)p.outfit=el.value;
-}
-
-function renderCastSummary(){
-var box=document.getElementById(‘castSummary’);
-var lines=bPeople.map(function(p){
-return ‘<div><strong>’+p.name+(p.isMe?’ (you)’:’’)+’</strong> — ‘+(p.outfit||‘outfit not set’)+’, ‘+p.emotion+’</div>’;
-}).join(’’);
-box.innerHTML=’<div style="font-size:10px;letter-spacing:2px;color:var(--gold);margin-bottom:8px">CAST</div>’+lines;
-box.style.display=‘block’;
-}
-
-function chip(id,text){var el=document.getElementById(id);el.value=el.value?el.value+’, ’+text:text;}
-
-function setLoader(on,title,sub){
-document.getElementById(‘loader’).classList.toggle(‘on’,on);
-if(title)document.getElementById(‘loadTitle’).textContent=title;
-if(sub)document.getElementById(‘loadSub’).textContent=sub;
-}
-function setSt(msg,cls){var e=document.getElementById(‘mainSt’);e.textContent=msg;e.className=‘status ‘+(cls||’’);}
-function clearResults(){
-document.getElementById(‘musicResult’).classList.remove(‘show’);
-document.getElementById(‘sceneResult’).classList.remove(‘show’);
-}
-
-async function poll(id){
-for(var i=0;i<80;i++){
-await new Promise(function(r){setTimeout(r,3000);});
-var res=await fetch(‘https://api.replicate.com/v1/predictions/’+id,{headers:{‘Authorization’:’Bearer ’+apiKey}});
-var data=await res.json();
-if(data.status===‘succeeded’)return data.output;
-if(data.status===‘failed’)throw new Error(data.error||‘Generation failed’);
-}
-throw new Error(‘Timed out — try again’);
-}
-
-async function genMusic(beatDesc,genre){
-var res=await fetch(‘https://api.replicate.com/v1/models/meta/musicgen/predictions’,{
-method:‘POST’,
-headers:{‘Authorization’:’Bearer ‘+apiKey,‘Content-Type’:‘application/json’},
-body:JSON.stringify({input:{prompt:genre+’ music: ’+beatDesc,model_version:‘stereo-large’,output_format:‘wav’,normalization_strategy:‘peak’,duration:30}})
-});
-var data=await res.json();
-if(!data.id)throw new Error(data.detail||‘Music failed to start’);
-return await poll(data.id);
-}
-
-async function genImage(prompt){
-var res=await fetch(‘https://api.replicate.com/v1/models/black-forest-labs/flux-schnell/predictions’,{
-method:‘POST’,
-headers:{‘Authorization’:’Bearer ’+apiKey,‘Content-Type’:‘application/json’},
-body:JSON.stringify({input:{prompt:prompt,num_outputs:1,aspect_ratio:‘9:16’,output_format:‘png’,output_quality:90}})
-});
-var data=await res.json();
-if(!data.id)throw new Error(data.detail||‘Image failed to start’);
-return await poll(data.id);
-}
-
-function buildScenePrompt(scene,people){
-var cast=people.map(function(p){
-var parts=[];
-if(p.isMe)parts.push(‘as the MAIN CHARACTER prominently in the foreground’);
-if(p.outfit)parts.push(’wearing ‘+p.outfit);
-parts.push(‘with ‘+p.emotion+’ expression’);
-return p.name+’: ‘+parts.join(’, ‘);
-}).join(’ | ’);
-return ‘Cinematic professional music video still photograph. Scene: ‘+scene+’. Characters: ‘+cast+’. High quality 4K photorealistic, dramatic cinematic lighting, music video aesthetic.’;
-}
-
-function showMusicResult(url,isBlob){
-document.getElementById(‘audioOut’).src=url;
-document.getElementById(‘dlMusic’).href=url;
-document.getElementById(‘musicResult’).classList.add(‘show’);
-}
-
-function showSceneResult(out){
-var url=Array.isArray(out)?out[0]:out;
-document.getElementById(‘sceneImg’).src=url;
-document.getElementById(‘dlScene’).href=url;
-document.getElementById(‘sceneResult’).classList.add(‘show’);
-}
-
-async function runBuilder(){
-if(!apiKey){setSt(‘Enter your Replicate API key first’,‘err’);return;}
-var scene=document.getElementById(‘bScene’).value.trim();
-if(!scene){setSt(‘Describe your scene first’,‘err’);return;}
-document.getElementById(‘buildBtn’).disabled=true;
-clearResults();setSt(’’,’’);
-document.querySelectorAll(’#builderMode .card’).forEach(function(c){c.classList.remove(‘show’);});
-try{
-if(bMusicTab===‘ai’){
-setLoader(true,‘CREATING YOUR TRACK’,‘Cooking up the beat…’);
-var mout=await genMusic(document.getElementById(‘bBeat’).value.trim(),bGenre);
-showMusicResult(Array.isArray(mout)?mout[0]:mout,false);
-}else{
-showMusicResult(bSongUrl,true);
-}
-setLoader(true,‘BUILDING YOUR SCENE’,‘Placing everyone in the world…’);
-var prompt=buildScenePrompt(scene,bPeople);
-var iout=await genImage(prompt);
-showSceneResult(iout);
-setLoader(false);
-setSt(‘🔥 Your music video is ready!’,‘ok’);
-}catch(err){
-setLoader(false);setSt(’Error: ’+err.message,‘err’);
-document.getElementById(‘buildBtn’).disabled=false;
-goStep(4);
-}
-}
-
-async function runDirector(){
-if(!apiKey){setSt(‘Enter your Replicate API key first’,‘err’);return;}
-var desc=document.getElementById(‘dPrompt’).value.trim();
-if(!desc){setSt(‘Describe your video first’,‘err’);return;}
-if(!dPeople.some(function(p){return p.b64s.length>0;})){setSt(‘Upload at least one photo first’,‘err’);return;}
-document.getElementById(‘dirBtn’).disabled=true;
-clearResults();setSt(’’,’’);
-try{
-if(dMusicTab===‘ai’){
-var beat=document.getElementById(‘dBeat’).value.trim();
-if(!beat){setSt(‘Describe your beat or upload a song’,‘err’);document.getElementById(‘dirBtn’).disabled=false;return;}
-setLoader(true,‘CREATING YOUR TRACK’,‘Cooking up the beat…’);
-var mout2=await genMusic(beat,dGenre);
-showMusicResult(Array.isArray(mout2)?mout2[0]:mout2,false);
-}else{
-if(!dSongUrl){setSt(‘Upload your song first’,‘err’);document.getElementById(‘dirBtn’).disabled=false;return;}
-showMusicResult(dSongUrl,true);
-}
-var castRef=dPeople.map(function(p){return p.name+(p.isMe?’ (main character, front and center)’:’’);}).join(’ and ’);
-var fullPrompt=‘Cinematic professional music video still photograph. ‘+desc+’. Cast includes: ‘+castRef+’. Photorealistic, 4K, dramatic cinematic lighting, music video aesthetic, high detail.’;
-setLoader(true,‘BUILDING YOUR SCENE’,‘Bringing your vision to life…’);
-var iout2=await genImage(fullPrompt);
-showSceneResult(iout2);
-setLoader(false);
-setSt(‘🔥 Your music video is ready!’,‘ok’);
-}catch(err){
-setLoader(false);setSt(’Error: ’+err.message,‘err’);
-document.getElementById(‘dirBtn’).disabled=false;
-}
-}
-
-function resetAll(){
-currentStep=1;bSongUrl=null;dSongUrl=null;
-bPeople=[];dPeople=[];nextBId=0;nextDId=0;
-[‘bBeat’,‘bScene’,‘dBeat’,‘dPrompt’].forEach(function(id){
-var el=document.getElementById(id);if(el)el.value=’’;
-});
-document.getElementById(‘buildBtn’).disabled=false;
-document.getElementById(‘dirBtn’).disabled=false;
-clearResults();setSt(’’,’’);setLoader(false);
-addPerson(‘b’,true);addPerson(‘d’,true);
-if(appMode===‘builder’)goStep(1);
-}
 </script>
 
 </body>

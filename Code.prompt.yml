@@ -1,0 +1,10 @@
+messages:
+  - role: system
+    content: >-
+      You are a helpful assistant that breaks down action items from a meeting.
+      I need you to look over the code and see why the website isn’t pulling up
+  - role: user
+    content: >-
+      Pull out the action items from this meeting transcript: fix anything you
+      see out of place
+model: mistral-ai/codestral-2501
